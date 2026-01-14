@@ -108,16 +108,6 @@ func MarshalUnsafe[T any](xml XMLNode[T], data T) []byte {
 	return b.Bytes()
 }
 
-func MarshalDouble[T any](builder *dagger.Node[any, XMLNode[T]], data T) ([]byte, error) {
-	node, _ := builder.Build(nil)
-	return Marshal(node, data)
-}
-
-func MarshalDoubleUnsafe[T any](builder *dagger.Node[any, XMLNode[T]], data T) []byte {
-	node, _ := builder.Build(nil)
-	return MarshalUnsafe(node, data)
-}
-
 type Writer interface {
 	io.Writer
 	io.StringWriter
