@@ -36,19 +36,15 @@ func TestPkgCompXMLMarshalling(t *testing.T) {
 }
 
 func BenchmarkStdXMLMarshalling(b *testing.B) {
+	b.SetBytes(compliance.StateBytesLen)
+
 	for b.Loop() {
 		xml.Marshal(compliance.StdStates)
 	}
 }
 
-func BenchmarkPkgPreXMLMarshallingInside(b *testing.B) {
-	for b.Loop() {
-		states := compliance.BuildXMLStates()
-		pkg.Marshal(states, &compliance.PkgStates)
-	}
-}
-
 func BenchmarkPkgPreXMLMarshalling(b *testing.B) {
+	b.SetBytes(compliance.StateBytesLen)
 	states := compliance.BuildXMLStates()
 
 	for b.Loop() {
@@ -57,6 +53,7 @@ func BenchmarkPkgPreXMLMarshalling(b *testing.B) {
 }
 
 func BenchmarkPkgPreXMLMarshallingUnsafe(b *testing.B) {
+	b.SetBytes(compliance.StateBytesLen)
 	states := compliance.BuildXMLStates()
 
 	for b.Loop() {
@@ -65,6 +62,7 @@ func BenchmarkPkgPreXMLMarshallingUnsafe(b *testing.B) {
 }
 
 func BenchmarkPkgPreXMLStreaming(b *testing.B) {
+	b.SetBytes(compliance.StateBytesLen)
 	states := compliance.BuildXMLStates()
 
 	for b.Loop() {
@@ -72,20 +70,8 @@ func BenchmarkPkgPreXMLStreaming(b *testing.B) {
 	}
 }
 
-func BenchmarkPkgCompXMLMarshallingDouble(b *testing.B) {
-	for b.Loop() {
-		pkg.MarshalDouble(compliance.StatesBuilder, &compliance.PkgStates)
-	}
-}
-
-func BenchmarkPkgCompXMLMarshallingInside(b *testing.B) {
-	for b.Loop() {
-		states := compliance.BuildCompXMLStates(compliance.PkgStates)
-		pkg.Marshal(states, &compliance.PkgStates)
-	}
-}
-
 func BenchmarkPkgCompXMLMarshalling(b *testing.B) {
+	b.SetBytes(compliance.StateBytesLen)
 	states := compliance.BuildCompXMLStates(compliance.PkgStates)
 
 	for b.Loop() {
@@ -93,13 +79,8 @@ func BenchmarkPkgCompXMLMarshalling(b *testing.B) {
 	}
 }
 
-func BenchmarkPkgCompXMLMarshallingDoubleUnsafe(b *testing.B) {
-	for b.Loop() {
-		pkg.MarshalDoubleUnsafe(compliance.StatesBuilder, &compliance.PkgStates)
-	}
-}
-
 func BenchmarkPkgCompXMLMarshallingUnsafe(b *testing.B) {
+	b.SetBytes(compliance.StateBytesLen)
 	states := compliance.BuildCompXMLStates(compliance.PkgStates)
 
 	for b.Loop() {
@@ -108,6 +89,7 @@ func BenchmarkPkgCompXMLMarshallingUnsafe(b *testing.B) {
 }
 
 func BenchmarkPkgCompXMLStreaming(b *testing.B) {
+	b.SetBytes(compliance.StateBytesLen)
 	states := compliance.BuildCompXMLStates(compliance.PkgStates)
 
 	for b.Loop() {

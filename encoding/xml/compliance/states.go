@@ -73,6 +73,7 @@ var StdStates XMLStates
 var PkgStates States
 
 var StateBytes []byte
+var StateBytesLen int64
 
 func LoadData(path string) {
 	file, err := os.Open(path)
@@ -80,6 +81,7 @@ func LoadData(path string) {
 		panic(err)
 	}
 	StateBytes, _ = io.ReadAll(file)
+	StateBytesLen = int64(len(StateBytes))
 
 	xml.Unmarshal(StateBytes, &StdStates)
 
@@ -142,10 +144,10 @@ var stateBuilder = pkg.Fragment(func(xml *pkg.XML[*State]) *dagger.Node[any, pkg
 		),
 		xml.Element("coords").Append(
 			xml.Element("latitude").Append(
-				xml.TextLiteral(func(state *State) []byte { return strconv.AppendFloat(nil, state.Coords.Latitude, 'f', 2, 64) }),
+				xml.Text(func(state *State) string { return strconv.FormatFloat(state.Coords.Latitude, 'f', 2, 64) }),
 			),
 			xml.Element("longitude").Append(
-				xml.TextLiteral(func(state *State) []byte { return strconv.AppendFloat(nil, state.Coords.Longitude, 'f', 2, 64) }),
+				xml.Text(func(state *State) string { return strconv.FormatFloat(state.Coords.Longitude, 'f', 2, 64) }),
 			),
 		),
 	)
